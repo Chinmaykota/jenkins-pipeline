@@ -6,9 +6,9 @@ pipeline {
     }
 
     parameters {
-        string(name: 'person', defaultValue: 'Tanmay Kota', description: "Who are you?!")
+        string(myname: 'person', defaultValue: 'Tanmay Kota', description: "Who are you?!")
         booleanParam(name: 'isMale', defaultValue: true, description: "")
-        choice(name: 'City', choices: ['Jaipur', 'Mumbai', 'Pune'], description: "Select City")
+        choice(cityname: 'City', choices: ['Jaipur', 'Mumbai', 'Pune'], description: "Select City")
     }
 
     stages {
@@ -43,8 +43,8 @@ pipeline {
         stage('Parameters') {
             steps {
                 echo 'Deploy on test'
-                bat 'echo "%name%"'
-                bat 'echo "%username%"'
+                bat 'echo "%cityname%"'
+                bat 'echo "%myname%"'
             }
         }
 
