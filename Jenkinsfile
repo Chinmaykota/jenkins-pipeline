@@ -6,15 +6,15 @@ pipeline {
     }
 
     parameters {
-        string(myname: 'person', defaultValue: 'Tanmay Kota', description: "Who are you?!")
-        booleanParam(name: 'isMale', defaultValue: true, description: "")
-        choice(cityname: 'City', choices: ['Jaipur', 'Mumbai', 'Pune'], description: "Select City")
+        string(name: 'person', defaultValue: 'Tanmay Kota', description: "Who are you?!")
+        booleanParam(name: 'isMale', defaultValue: true, description: "Are you male?")
+        choice(name: 'City', choices: ['Jaipur', 'Mumbai', 'Pune'], description: "Select City")
     }
 
     stages {
         stage('Run a command') {
             steps {
-                echo 'Hello World'
+                bat 'echo Hello World'
             }
         }
 
@@ -34,17 +34,22 @@ pipeline {
                 username = 'chinmaykota'
             }
             steps {
-                bat 'echo "%BUILD_ID%"'
-                bat 'echo "%name%"'
-                bat 'echo "%username%"'
+                bat '''
+                echo BUILD_ID=%BUILD_ID%
+                echo Name=%name%
+                echo Username=%username%
+                '''
             }
         }
 
         stage('Parameters') {
             steps {
-                echo 'Deploy on test'
-                bat 'echo "%cityname%"'
-                bat 'echo "%myname%"'
+                bat '''
+                echo Deploy on test
+                echo Person=%person%
+                echo Is Male=%isMale%
+                echo City=%City%
+                '''
             }
         }
 
@@ -54,20 +59,20 @@ pipeline {
                 ok "Yes, we should"
             }
             steps {
-                echo 'Deploying on production'
+                bat 'echo Deploying on production'
             }
         }
     }
 
     post {
         always {
-            echo 'I will say hello again'
+            bat 'echo I will say hello again'
         }
         success {
-            echo 'Success'
+            bat 'echo Success'
         }
         failure {
-            echo 'Failure'
+            bat 'echo Failure'
         }
     }
 }
